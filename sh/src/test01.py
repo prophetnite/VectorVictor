@@ -4,33 +4,27 @@ Created on Nov 8, 2013
 @author: erik
 '''
 import gensim
-
-#model = gensim.models.Word2Vec.load('vecmodel.bin', binary=True)
-model = gensim.models.Word2Vec.load('vecmodel.txt')
-
-#model.save('/vec.model')
-# store the learned weights, in a format the original C tool understands
-#model.save_word2vec_format('../vec.model.bin', binary=True)
-# or, import word weights created by the (faster) C word2vec
-# this way, you can switch between the C/Python toolkits easily
-#model = gensim.models.Word2Vec.load_word2vec_format('../vecmodel.bin', binary=True)
+print('test01')
+model = gensim.models.Word2Vec.load('../vecmodel-full1000.txt')
 
 converted = []
-
-results='woman queen man'
-result = list()
+results=u'woman king man male'.split()
 for result in results:
     #result = list(result) # make a list from the tuple
-    result = str(unicode(result, 'utf-8'))
+    result = str(result)
     converted.append(result) # tuplify again
-
+print(results)
+#try:
+    #print(model.syn0[model.vocab.get(converted[2].index)])
+#except:
+#    pass
+#print(format(u'result of: %s + $s - %s' + results))
+print(model.most_similar(positive=[converted[0], converted[1]], negative=[converted[2]]))
+print(model.doesnt_match(str(u"breakfast origami dinner lunch").split()))
+print(model.similarity(results[2], results[3]))
 
 #model.create_binary_tree()
-#model.syn0[model.vocab.get(converted[2].index)
-#print(model.most_similar(positive=[converted[0], converted[1]], negative=[converted[2]])
-#print(model.doesnt_match(list("breakfast origami dinner lunch".split())))
-
-print(model.similarity(converted[0], converted[1]))
-
-#print(model['computer'])  # raw numpy vector of a word
+#for i in range(10):
+#    print(model.index2word[i])
+#print(model.similarity(converted[0],converted[1]))
 
