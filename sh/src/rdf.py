@@ -1,17 +1,57 @@
-import json
-import urllib
-from rdflib.graph import ConjunctiveGraph
+#import json
+#import urllib
+#from rdflib.graph import ConjunctiveGraph
+#from rdflib import sparqlwrapper
 import gzip
-file = gzip.GzipFile('../../freebase-rdf-2014.gz')
-api_key = "AIzaSyCIolPNxjOUjE1hbgLct2WP5jS3H-TJVQQ"
-service_url = 'https://www.googleapis.com/freebase/v1/rdf'
-topic_id = '/music/02h40lc'
-params = {
-  'key': api_key
-}
-#url = service_url + topic_id + '?' + urllib.urlencode(params)
-g = ConjunctiveGraph()
-g.load(file, format="n3")
-print(g[6])#so fly
+import rdflib
+from SPARQLWrapper import SPARQLWrapper, JSON
+
+f = gzip.GzipFile('../../baseKBLite/triples0200.nt.gz')#let f be any rdf source you want!
+
+#here's the way to do it networked, but pick a better schema addr
+#queryString = """
+#PREFIX  xsd:    <http://www.w3.org/2001/XMLSchema#>
+#PREFIX  dc:     <http://purl.org/dc/elements/1.1/>
+#PREFIX  :       <.>
+#
+#SELECT *
+#{
+#    { ?s ?p ?o } UNION { GRAPH ?g { ?s ?p ?o } }
+#}
+#"""
+#sparql = SPARQLWrapper("http://www.w3.org/2001/XMLSchema")
+# add a default graph, though that can also be part of the query string
+#sparql.addDefaultGraph(f.read())
+#sparql.setQuery(queryString)
+#ret = sparql.query()
+
+g = rdflib.Graph()
+g = g.parse(data=f.read(),format='n3')
+for label in list(g[:rdflib.RDFS.label]) :# all label triples
+    print label
+#print list(g[::rdflib.Literal('Wolfgang Winkler')]) # all triples with literal string as object
+#print list(g[:rdflib.RDFS.object])#all objects (i hope)
 #for s, p, o in g:
-#  print s, p, o
+#     print(o)
+#print(ret)
+"""
+        Combined with SPARQL paths, more complex queries can be
+        written concisely:
+
+        Name of all Bobs friends:
+
+        g[bob : FOAF.knows/FOAF.name ]
+
+        Some label for Bob:
+
+        g[bob : DC.title|FOAF.name|RDFS.label]
+
+        All friends and friends of friends of Bob
+
+        g[bob : FOAF.knows * '+']
+
+        etc.
+
+        .. versionadded:: 4.0
+
+        """
