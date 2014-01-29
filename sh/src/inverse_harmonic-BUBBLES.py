@@ -1,12 +1,21 @@
+'''
+nltk would help here
+
+but parse a sentence to a binary tree
+then score based on harmonic series, branching out from some node,
+empty nodes count against information flow
+
+create visualization of semantic flow of sentence
+'''
+
+
+
+
+
+
+
+
 #import gensim
-import csv
-f = file('relationmap.txt', 'w')
-sentences = ''
-with file('../bubbles/csv/cos_knn_10.csv', 'rb') as csvfile:
-    spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
-    for row in spamreader:
-        sentences+='  '.join(row).replace(';',' ')+' '
-f.write(str(sentences))
 #model = gensim.models.Word2Vec.load('vecmodel.bin', binary=True)
 #model = gensim.models.Word2Vec.load('../vecmodel.bin')
 #corpus = file('../../enwiki-articles1.xml') #wikipedia latest full article dump

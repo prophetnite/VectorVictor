@@ -7,7 +7,7 @@ Created on Jan 11, 2014
 import gensim, bz2
 
 
-wiki = file('../../enwiki-articles1.xml') #wikipedia article dump
+wiki = bz2.BZ2File('../../enwiki-articles.xml.bz2') #wikipedia article dump
 print 'hold on...'
 
 print 'here we go...'
@@ -24,13 +24,13 @@ model.train(tokens)
 
 print 'model built'
 try:
-    model.save('../vecmodel-full1000.txt')
+    model.save('../vecmodel-full1000.bin')
     print('model saved')
 except:
-    print("vecmodel-full1000.txt not saved")
-#try:
-#    model.save_word2vec_format('../enwiki-articles-word2vec-fmt.bin', binary=True)
-#except:
-#    print("model bin not saved")
+    print("vecmodel-full1000.bin not saved")
+try:
+    model.save_word2vec_format('../enwiki-articles-word2vec-fmt.bin', binary=True)
+except:
+    print("model bin not saved")
 
 

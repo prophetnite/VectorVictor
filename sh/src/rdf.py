@@ -6,7 +6,7 @@ import gzip
 import rdflib
 from SPARQLWrapper import SPARQLWrapper, JSON
 
-f = gzip.GzipFile('../../baseKBLite/triples0200.nt.gz')#let f be any rdf source you want!
+f = gzip.GzipFile('../rdf/content.rdf.u8.gz')#let f be any rdf source you want!
 
 #here's the way to do it networked, but pick a better schema addr
 #queryString = """
