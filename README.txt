@@ -1,2 +1,1 @@
-This is my vector, victor.
-It's gonna have bubbles and a nice html/js thingy to look at em.
+Check out the new vector flows!  Fork and modify! Understand so we can understand and help me help you help us all!
