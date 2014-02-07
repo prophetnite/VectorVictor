@@ -42,6 +42,9 @@ class Word:
     def to_dict(self):
         return {self.w: [self.x,self.y,self.score]}
 
+    def to_dict_h337(self):
+        return {'x':self.x,'y':self.y,'count':self.score*10}
+
     def strip_punctuation(self,s):
         return s.strip(string.punctuation)
 
@@ -66,10 +69,11 @@ max_score = words_sorted[0].score
 j = len(words_sorted)-1
 while j >= 0:
     cur_word = words_sorted[j]
-    # produces cluster of coordinates for each word around the most important word
-    cur_word.x = 400 + (400 * (max_score - cur_word.score)) - 100*math.sin(j/8.1)
-    cur_word.y = 400 + (400 * (max_score - cur_word.score)) - 100*math.cos(j/9.2) #little wider than it is tall
+    # Produces cluster of coordinates for each word around the most important word.
+    # Roughly radial distribution. Points are closer vertically than horizantally, for obvious reasons.
+    cur_word.x = 400 + (400 * (max_score - cur_word.score)) - 120*math.sin(j/7.1)
+    cur_word.y = 400 + (400 * (max_score - cur_word.score)) - 80*math.cos(j/7.9)
     j = j - 1
 
-print json.dumps({'data':str([word.to_dict() for word in words])})
+print json.dumps({'data':str([word.to_dict_h337() for word in words])})
 
