@@ -35,23 +35,23 @@ for label in list(g[:rdflib.RDFS.label]) :# all label triples
 #     print(o)
 #print(ret)
 """
-        Combined with SPARQL paths, more complex queries can be
-        written concisely:
+    Combined with SPARQL paths, more complex queries can be
+    written concisely:
 
-        Name of all Bobs friends:
+    Name of all Bobs friends:
 
-        g[bob : FOAF.knows/FOAF.name ]
+    g[bob : FOAF.knows/FOAF.name ]
 
-        Some label for Bob:
+    Some label for Bob:
 
-        g[bob : DC.title|FOAF.name|RDFS.label]
+    g[bob : DC.title|FOAF.name|RDFS.label]
 
-        All friends and friends of friends of Bob
+    All friends and friends of friends of Bob
 
-        g[bob : FOAF.knows * '+']
+    g[bob : FOAF.knows * '+']
 
-        etc.
+    etc.
 
-        .. versionadded:: 4.0
+    .. versionadded:: 4.0
 
-        """
+"""

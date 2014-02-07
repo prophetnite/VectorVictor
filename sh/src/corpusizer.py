@@ -4,33 +4,65 @@ Created on Jan 11, 2014
 @author: Erik
 '''
 
-import gensim, bz2
+import gensim, bz2, os
+
+def extract(dirname):
+    for fname in os.listdir(dirname):
+        print fname
+        texts = gensim.corpora.wikicorpus._extract_pages(bz2.BZ2File(os.path.join(dirname, fname))) # generator
+
+        for text in texts:
+            for sentence in text:
+                s = process_article(text)
+                if(len(s)>50):
+                    yield s
+                else:
+                    continue
+
+def process_article(document):
+    text = gensim.corpora.wikicorpus.filter_wiki(str(document)) # remove markup, get plain text
+    return gensim.corpora.wikicorpus.tokenize(text) # tokenize plain text
+
+def is_number(s):
+    try:
+        float(s)
+        return True
+    except ValueError:
+        return False
+
+def yield_vocab():
+    lines = open('enwiki_wordids.txt').readlines()
+    sentence = []
+    for line in lines:
+        for word in line.split():
+            if not is_number(word):
+                sentence.append(word)
+    return sentence
 
 
-wiki = bz2.BZ2File('../../enwiki-articles.xml.bz2') #wikipedia article dump
-print 'hold on...'
+def build(fname, dirname = '../enwiki/'):
+    print 'starting corpus build...'
+    model = gensim.models.Word2Vec(size=400, window=5, min_count=10, workers=4)
+    model.build_vocab(extract(dirname))
+    model.train(extract(dirname))
+    print 'model built'
+    try:
+        model.save(fname)
+        print('model saved')
+    except:
+        print('model not saved')
 
-print 'here we go...'
-model = gensim.models.Word2Vec(size=1000, window=5, min_count=5, workers=4)
 
-tokens = []
-documents = gensim.corpora.wikicorpus._extract_pages(wiki)
-for document in documents:
-    sentence = gensim.corpora.wikicorpus.filter_wiki(str(document))
-    tokens.append(gensim.corpora.wikicorpus.tokenize(sentence.encode('utf-8')))
-print(tokens[15])
-model.build_vocab(tokens)
-model.train(tokens)
+def augment(fname, dirname):
+    print 'augmenting ' + fname + ' with files in ' + dirname
+    model = gensim.models.Word2Vec.load(fname)
+    model.train(extract(dirname))
+    print 'model built'
+    try:
+        model.save(fname)
+        print('model saved')
+    except:
+        print('model not saved')
 
-print 'model built'
-try:
-    model.save('../vecmodel-full1000.bin')
-    print('model saved')
-except:
-    print("vecmodel-full1000.bin not saved")
-try:
-    model.save_word2vec_format('../enwiki-articles-word2vec-fmt.bin', binary=True)
-except:
-    print("model bin not saved")
-
+#augment('../vecmodel-partial-400.bin','../enwiki-to-process')
 
