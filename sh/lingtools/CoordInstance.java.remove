@@ -1,0 +1,22 @@
+/**
+ * 
+ */
+public class CoordInstance {
+	//indicates whether this coordination instance matches one of the patterns
+	boolean match = false;	
+	
+	//all values below should be null if !match
+	//the indexes of the first and last members of the instance the original sentence 
+	int[] boundaryIndexes = new int[2];
+	
+	//the indexes of the modifier, nearConjunct, and farConjunct 
+	int modifier;
+	int nearConjunct;
+	int farConjunct;
+	
+	public CoordInstance(){}
+	public CoordInstance(int nearConjunct, int farConjunct){
+		this.nearConjunct = nearConjunct;
+		this.farConjunct = farConjunct;
+	}
+}

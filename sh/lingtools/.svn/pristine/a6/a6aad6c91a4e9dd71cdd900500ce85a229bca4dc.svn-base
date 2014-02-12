@@ -1,0 +1,38 @@
+1/7/2014
+added ClassifierTest to /src
+-requires: weka.jar  --  get it from one of the packages here: http://www.cs.waikato.ac.nz/ml/weka/downloading.html
+ 	
+added training/test data for the 75% ambiguity threshold
+
+
+
+12/18/2013
+The new code requires:
+
+Local installation of WordNet 2.1:
+http://wordnetcode.princeton.edu/2.1/WordNet-2.1.tar.gz
+- only the "/dict" folder is required. 
+
+2 additional libraries: -both are in "ling/coordination/WordNet Dependencies"
+jwnl.jar
+JWordNetSim.jar
+
+2 related files: -both are in "ling/coordination/WordNet Dependencies"
+ic-bnc-resnik.dat
+wordnet.xml
+- these are used by the method semanticSim() in coordAmbiguity.class.
+- the parameter "dictionary_path" in wordnet.xml must point to the WordNet 2.1 "/dict" folder. 
+
+
+12/?/2013
+coordAmbiguity is the driver program
+
+currently required libraries:         	link:
+commons-codec-1.8			http://commons.apache.org/proper/commons-codec/download_codec.cgi
+commons-httpclient-3.1			http://archive.apache.org/dist/httpcomponents/commons-httpclient/binary/
+commons-logging-1.1.3			http://commons.apache.org/proper/commons-logging/download_logging.cgi
+not-yet-commons-ssl-0.3.11		http://www.sketchengine.co.uk/documentation/attachment/wiki/SkE/Methods/example/not-yet-commons-ssl-0.3.11.jar
+org.json 				(in source folder)
+stanford-corenlp-3.3.0			http://nlp.stanford.edu/downloads/stanford-corenlp-full-2013-11-12.zip
+stanford-corenlp-3.3.0-models		http://nlp.stanford.edu/downloads/stanford-corenlp-full-2013-11-12.zip
+
